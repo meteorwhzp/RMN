@@ -6,8 +6,7 @@ import (
 	"io"
 )
 
-// TcpMessage is a CoAP Message that can encode itself for TCP
-// transport.
+//TcpMessage is a CoAP Message that can encode itself for TCP transport.
 type TcpMessage struct {
 	Message
 }
@@ -17,7 +16,6 @@ func (m *TcpMessage) MarshalBinary() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	/*
 		A CoAP TCP message looks like:
 
@@ -33,7 +31,6 @@ func (m *TcpMessage) MarshalBinary() ([]byte, error) {
 		   |1 1 1 1 1 1 1 1|    Payload (if any) ...
 		   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 	*/
-
 	l := []byte{0, 0}
 	binary.BigEndian.PutUint16(l, uint16(len(bin)))
 
@@ -44,11 +41,10 @@ func (m *TcpMessage) UnmarshalBinary(data []byte) error {
 	if len(data) < 4 {
 		return errors.New("short packet")
 	}
-
 	return m.Message.UnmarshalBinary(data)
 }
 
-// Decode reads a single message from its input.
+//Decode reads a single message from its input.
 func Decode(r io.Reader) (*TcpMessage, error) {
 	var ln uint16
 	err := binary.Read(r, binary.BigEndian, &ln)

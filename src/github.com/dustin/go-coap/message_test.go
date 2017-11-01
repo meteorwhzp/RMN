@@ -1,11 +1,11 @@
 package coap
 
 import (
-	"bytes"
 	"encoding"
+	"testing"
+	"bytes"
 	"fmt"
 	"reflect"
-	"testing"
 )
 
 var (
@@ -13,8 +13,8 @@ var (
 	_ = encoding.BinaryUnmarshaler(&Message{})
 )
 
-// assertEqualMessages compares the e(xptected) message to the a(ctual) message
-// and reports any diffs with t.Errorf.
+//assertEqualMessages compares the e(xpected) message to the a(ctual) message
+//and reports any diffs with t.Errorf.
 func assertEqualMessages(t *testing.T, e, a Message) {
 	if e.Type != a.Type {
 		t.Errorf("Expected type %v, got %v", e.Type, a.Type)
@@ -31,7 +31,6 @@ func assertEqualMessages(t *testing.T, e, a Message) {
 	if !bytes.Equal(e.Payload, a.Payload) {
 		t.Errorf("Expected payload %#v, got %#v", e.Payload, a.Payload)
 	}
-
 	if len(e.opts) != len(a.opts) {
 		t.Errorf("Expected %v options, got %v", len(e.opts), len(a.opts))
 	} else {
@@ -57,7 +56,7 @@ func assertEqualMessages(t *testing.T, e, a Message) {
 }
 
 func TestMediaTypes(t *testing.T) {
-	types := []interface{}{TextPlain, AppLinkFormat, AppXML, AppOctets, AppExi, AppJSON}
+	types := []interface{} {TextPlain, AppLinkFormat, AppXML, AppOctets, AppExi, AppJSON}
 	exp := "coap.MediaType"
 	for _, typ := range types {
 		if got := fmt.Sprintf("%T", typ); got != exp {
@@ -261,8 +260,8 @@ func TestOptionsWithIllegalLengthAreIgnoredDuringParsing(t *testing.T) {
 		Payload:   []byte{},
 	}
 	msg, err := ParseMessage([]byte{0x40, 0x01, 0xab, 0xcd,
-		0x73, // URI-Port option (uint) with length 3 (valid lengths are 0-2)
-		0x11, 0x22, 0x33, 0xff})
+									0x73, // URI-Port option (uint) with length 3 (valid lengths are 0-2)
+									0x11, 0x22, 0x33, 0xff})
 	if err != nil {
 		t.Fatalf("Error parsing message: %v", err)
 	}
@@ -271,8 +270,8 @@ func TestOptionsWithIllegalLengthAreIgnoredDuringParsing(t *testing.T) {
 	}
 
 	msg, err = ParseMessage([]byte{0x40, 0x01, 0xab, 0xcd,
-		0xd5, 0x01, // Max-Age option (uint) with length 5 (valid lengths are 0-4)
-		0x11, 0x22, 0x33, 0x44, 0x55, 0xff})
+								   0xd5, 0x01, // Max-Age option (uint) with length 5 (valid lengths are 0-4)
+								   0x11, 0x22, 0x33, 0x44, 0x55, 0xff})
 	if err != nil {
 		t.Fatalf("Error parsing message: %v", err)
 	}
@@ -382,7 +381,7 @@ func TestEncodeSeveral(t *testing.T) {
 		"a":   []string{"a"},
 		"axe": []string{"axe"},
 		"a/b/c/d/e/f/h/g/i/j": []string{"a", "b", "c", "d", "e",
-			"f", "h", "g", "i", "j"},
+										"f", "h", "g", "i", "j"},
 	}
 	for p, a := range tests {
 		m := &Message{Type: Confirmable, Code: GET, MessageID: 12345}
@@ -617,6 +616,7 @@ func TestByteDecoding(t *testing.T) {
    |  11   |  11   |      "temperature" (11 B) ...                 |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 */
+
 func TestExample1(t *testing.T) {
 	input := append([]byte{0x40, 1, 0x7d, 0x34,
 		(11 << 4) | 11}, []byte("temperature")...)
@@ -643,6 +643,7 @@ func TestExample1(t *testing.T) {
 	if len(msg.Token) > 0 {
 		t.Errorf("Incorrect token: %x", msg.Token)
 	}
+
 	if len(msg.Payload) > 0 {
 		t.Errorf("Incorrect payload: %q", msg.Payload)
 	}
@@ -687,10 +688,10 @@ func TestExample1Res(t *testing.T) {
 func TestIssue15(t *testing.T) {
 
 	input := []byte{0x53, 0x2, 0x7a,
-		0x23, 0x1, 0x2, 0x3, 0xb1, 0x45, 0xd, 0xd, 0x73, 0x70, 0x61,
-		0x72, 0x6b, 0x2f, 0x63, 0x63, 0x33, 0x30, 0x30, 0x30, 0x2d,
-		0x70, 0x61, 0x74, 0x63, 0x68, 0x2d, 0x76, 0x65, 0x72, 0x73,
-		0x69, 0x6f, 0x6e, 0xff, 0x31, 0x2e, 0x32, 0x38}
+					0x23, 0x1, 0x2, 0x3, 0xb1, 0x45, 0xd, 0xd, 0x73, 0x70, 0x61,
+					0x72, 0x6b, 0x2f, 0x63, 0x63, 0x33, 0x30, 0x30, 0x30, 0x2d,
+					0x70, 0x61, 0x74, 0x63, 0x68, 0x2d, 0x76, 0x65, 0x72, 0x73,
+					0x69, 0x6f, 0x6e, 0xff, 0x31, 0x2e, 0x32, 0x38}
 	msg, err := ParseMessage(input)
 	if err != nil {
 		t.Fatalf("Error parsing message: %v", err)
@@ -712,8 +713,8 @@ func TestIssue15(t *testing.T) {
 
 func TestErrorOptionMarker(t *testing.T) {
 	input := []byte{0x53, 0x2, 0x7a, 0x23,
-		0x1, 0x2, 0x3, 0xbf, 0x01, 0x02, 0x03, 0x04, 0x05, 0x6, 0x7, 0x8, 0x9,
-		0xa, 0xb, 0xc, 0xe, 0xf, 0x10}
+					0x1, 0x2, 0x3, 0xbf, 0x01, 0x02, 0x03, 0x04, 0x05, 0x6, 0x7, 0x8, 0x9,
+					0xa, 0xb, 0xc, 0xe, 0xf, 0x10}
 	msg, err := ParseMessage(input)
 	if err == nil {
 		t.Errorf("Unexpected success parsing malformed option: %v", msg)

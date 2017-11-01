@@ -1,29 +1,28 @@
 package coap
 
-import (
-	"net"
-)
+import "net"
 
-// ServeMux provides mappings from a common endpoint to handlers by
-// request path.
+//ServeMux provides mappings from a common endpoint to handlers by request path.
 type ServeMux struct {
 	m map[string]muxEntry
 }
 
 type muxEntry struct {
-	h       Handler
+	h Handler
 	pattern string
 }
 
-// NewServeMux creates a new ServeMux.
-func NewServeMux() *ServeMux { return &ServeMux{m: make(map[string]muxEntry)} }
+//NewServeMux creates a new ServeMux
+func NewServeMux() *ServeMux {
+	return &ServeMux{m: make(map[string]muxEntry)}
+}
 
-// Does path match pattern?
+//Does path match pattern?
 func pathMatch(pattern, path string) bool {
 	if len(pattern) == 0 {
-		// should not happen
 		return false
 	}
+
 	n := len(pattern)
 	if pattern[n-1] != '/' {
 		return pattern == path
@@ -31,8 +30,8 @@ func pathMatch(pattern, path string) bool {
 	return len(path) >= n && path[0:n] == pattern
 }
 
-// Find a handler on a handler map given a path string
-// Most-specific (longest) pattern wins
+//Find a handler on a handler map given a path string
+//Most-specific(longest) pattern wins
 func (mux *ServeMux) match(path string) (h Handler, pattern string) {
 	var n = 0
 	for k, v := range mux.m {
@@ -60,23 +59,21 @@ func notFoundHandler(l *net.UDPConn, a *net.UDPAddr, m *Message) *Message {
 
 var _ = Handler(&ServeMux{})
 
-// ServeCOAP handles a single COAP message.  The message arrives from
-// the given listener having originated from the given UDPAddr.
+//ServeCOAP handles a single CoAP message. The message arrives from
+//the given listener having originated from the given UDPAddr.
 func (mux *ServeMux) ServeCOAP(l *net.UDPConn, a *net.UDPAddr, m *Message) *Message {
 	h, _ := mux.match(m.PathString())
 	if h == nil {
-		h, _ = funcHandler(notFoundHandler), ""
+		h, _ = FuncHandler(notFoundHandler), ""
 	}
-	// TODO:  Rewrite path?
 	return h.ServeCOAP(l, a, m)
 }
 
-// Handle configures a handler for the given path.
+//handle configures a handler fot the given path.
 func (mux *ServeMux) Handle(pattern string, handler Handler) {
 	for pattern != "" && pattern[0] == '/' {
 		pattern = pattern[1:]
 	}
-
 	if pattern == "" {
 		panic("http: invalid pattern " + pattern)
 	}
@@ -87,8 +84,7 @@ func (mux *ServeMux) Handle(pattern string, handler Handler) {
 	mux.m[pattern] = muxEntry{h: handler, pattern: pattern}
 }
 
-// HandleFunc configures a handler for the given path.
-func (mux *ServeMux) HandleFunc(pattern string,
-	f func(l *net.UDPConn, a *net.UDPAddr, m *Message) *Message) {
+//HandleFunc configures a handler fot the given path.
+func (mux *ServeMux) HandleFunc(pattern string, f func(l *net.UDPConn, a *net.UDPAddr, m *Message) *Message) {
 	mux.Handle(pattern, FuncHandler(f))
 }

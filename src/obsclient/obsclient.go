@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-
+	logger "github.com/shengkehua/xlog4go"
 	"github.com/dustin/go-coap"
 )
 
@@ -20,6 +20,7 @@ func main() {
 	c, err := coap.Dial("udp", "localhost:5683")
 	if err != nil {
 		log.Fatalf("Error dialing: %v", err)
+		logger.Error(err.Error())
 	}
 
 	rv, err := c.Send(req)
