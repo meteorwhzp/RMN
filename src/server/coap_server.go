@@ -52,7 +52,7 @@ func handleB(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 }
 
 func main() {
-	fmt.Println("start server")
+	logger.Info("start server")
 	//startTime = time.Now().UnixNano() / 1000000
 	mux := coap.NewServeMux()
 	mux.Handle("/a", coap.FuncHandler(handleA))
