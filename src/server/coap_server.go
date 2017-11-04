@@ -6,6 +6,15 @@ import (
 
 	"github.com/dustin/go-coap"
 	logger "github.com/shengkehua/xlog4go"
+	"fmt"
+	"flag"
+	"runtime"
+	"time"
+	"math/rand"
+)
+
+var (
+	logconf = flag.String("l", "./conf/log.json", "log config file path")
 )
 
 func handleA(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
@@ -51,6 +60,16 @@ func handleB(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 }
 
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
+	rand.Seed(time.Now().UnixNano())
+	flag.Parse()
+
+	// log
+	if err := logger.SetupLogWithConf(*logconf); err != nil {
+		panic(err)
+	}
+	defer logger.Close()
+
 	logger.Info("start server")
 	//startTime = time.Now().UnixNano() / 1000000
 	mux := coap.NewServeMux()
