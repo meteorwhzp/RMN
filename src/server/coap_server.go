@@ -5,17 +5,15 @@ import (
 	"net"
 
 	"github.com/dustin/go-coap"
-	"time"
 	"fmt"
+	logger "github.com/shengkehua/xlog4go"
 )
 
 var startTime int64
 
 func handleA(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
-	timeNow := time.Now().UnixNano() / 1000000
-	spendTime := timeNow - startTime
-	fmt.Println("speed time :", spendTime)
-	//log.Printf("Got message in handleA: path=%q: %#v from %v", m.Path(), m, a)
+	//logger.Info("start handlerA")
+	logger.Info("Got message in handleA: path=%q: %#v from %v", m.Path(), m, a)
 	if m.IsConfirmable() {
 		res := &coap.Message{
 			Type:      coap.Acknowledgement,
@@ -26,17 +24,18 @@ func handleA(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 		}
 		res.SetOption(coap.ContentFormat, coap.TextPlain)
 
-		//log.Printf("Transmitting from A %#v", res)
+		logger.Info("Transmitting from A %#v", res)
 		return res
 	}
 	return nil
 }
 
 func handleB(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
-	timeNow := time.Now().UnixNano() / 1000000
+	/*timeNow := time.Now().UnixNano() / 1000000
 	spendTime := timeNow - startTime
 	fmt.Println("speed time :", spendTime)
-	log.Printf("Got message in handleB: path=%q: %#v from %v", m.Path(), m, a)
+	*/
+	logger.Info("Got message in handleB: path=%q: %#v from %v", m.Path(), m, a)
 	if m.IsConfirmable() {
 		res := &coap.Message{
 			Type:      coap.Acknowledgement,
@@ -48,7 +47,7 @@ func handleB(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 		res.SetOption(coap.ContentFormat, coap.TextPlain)
 
 
-		//log.Printf("Transmitting from B %#v", res)
+		logger.Info("Transmitting from B %#v", res)
 		return res
 	}
 	return nil
@@ -56,7 +55,7 @@ func handleB(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 
 func main() {
 	fmt.Println("start server")
-	startTime = time.Now().UnixNano() / 1000000
+	//startTime = time.Now().UnixNano() / 1000000
 	mux := coap.NewServeMux()
 	mux.Handle("/a", coap.FuncHandler(handleA))
 	mux.Handle("/b", coap.FuncHandler(handleB))

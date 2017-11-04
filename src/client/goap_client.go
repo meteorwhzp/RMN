@@ -34,7 +34,7 @@ func main() {
 		log.Fatalf("Error dialing: %v", err)
 	}
 
-	startTime := time.Now()
+	//startTime := time.Now()
 	for i := 0; i < num; i++ {
 		rv, err := c.Send(req)
 		if err != nil {
@@ -44,7 +44,7 @@ func main() {
 			log.Printf("%s", rv.Payload)
 		}
 	}
-	endTimeCoAP := time.Now()
-	fmt.Println("coap cost: ", endTimeCoAP.Sub(startTime).Nanoseconds()/int64(time.Millisecond), "ms")
+	//endTimeCoAP := time.Now()
+	//fmt.Println("coap cost: ", endTimeCoAP.Sub(startTime).Nanoseconds()/int64(time.Millisecond), "ms")
 
 }
