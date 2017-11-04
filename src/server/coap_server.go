@@ -6,7 +6,6 @@ import (
 
 	"github.com/dustin/go-coap"
 	logger "github.com/shengkehua/xlog4go"
-	"fmt"
 	"flag"
 	"runtime"
 	"time"
