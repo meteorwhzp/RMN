@@ -7,8 +7,6 @@ import (
 	"github.com/dustin/go-coap"
 	//"time"
 	"strconv"
-	"time"
-	"fmt"
 )
 
 func main() {
