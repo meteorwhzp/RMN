@@ -1,11 +1,11 @@
 package coap
 
 import (
-	"encoding"
-	"testing"
 	"bytes"
+	"encoding"
 	"fmt"
 	"reflect"
+	"testing"
 )
 
 var (
@@ -34,7 +34,7 @@ func assertEqualMessages(t *testing.T, e, a Message) {
 	if len(e.opts) != len(a.opts) {
 		t.Errorf("Expected %v options, got %v", len(e.opts), len(a.opts))
 	} else {
-		for i, _ := range e.opts {
+		for i := range e.opts {
 			if e.opts[i].ID != a.opts[i].ID {
 				t.Errorf("Expected option ID %v, got %v", e.opts[i].ID, a.opts[i].ID)
 				continue
@@ -56,7 +56,7 @@ func assertEqualMessages(t *testing.T, e, a Message) {
 }
 
 func TestMediaTypes(t *testing.T) {
-	types := []interface{} {TextPlain, AppLinkFormat, AppXML, AppOctets, AppExi, AppJSON}
+	types := []interface{}{TextPlain, AppLinkFormat, AppXML, AppOctets, AppExi, AppJSON}
 	exp := "coap.MediaType"
 	for _, typ := range types {
 		if got := fmt.Sprintf("%T", typ); got != exp {
@@ -260,8 +260,8 @@ func TestOptionsWithIllegalLengthAreIgnoredDuringParsing(t *testing.T) {
 		Payload:   []byte{},
 	}
 	msg, err := ParseMessage([]byte{0x40, 0x01, 0xab, 0xcd,
-									0x73, // URI-Port option (uint) with length 3 (valid lengths are 0-2)
-									0x11, 0x22, 0x33, 0xff})
+		0x73, // URI-Port option (uint) with length 3 (valid lengths are 0-2)
+		0x11, 0x22, 0x33, 0xff})
 	if err != nil {
 		t.Fatalf("Error parsing message: %v", err)
 	}
@@ -270,8 +270,8 @@ func TestOptionsWithIllegalLengthAreIgnoredDuringParsing(t *testing.T) {
 	}
 
 	msg, err = ParseMessage([]byte{0x40, 0x01, 0xab, 0xcd,
-								   0xd5, 0x01, // Max-Age option (uint) with length 5 (valid lengths are 0-4)
-								   0x11, 0x22, 0x33, 0x44, 0x55, 0xff})
+		0xd5, 0x01, // Max-Age option (uint) with length 5 (valid lengths are 0-4)
+		0x11, 0x22, 0x33, 0x44, 0x55, 0xff})
 	if err != nil {
 		t.Fatalf("Error parsing message: %v", err)
 	}
@@ -378,10 +378,10 @@ func TestEncodeMessageVerySmall2(t *testing.T) {
 
 func TestEncodeSeveral(t *testing.T) {
 	tests := map[string][]string{
-		"a":   []string{"a"},
-		"axe": []string{"axe"},
-		"a/b/c/d/e/f/h/g/i/j": []string{"a", "b", "c", "d", "e",
-										"f", "h", "g", "i", "j"},
+		"a":   {"a"},
+		"axe": {"axe"},
+		"a/b/c/d/e/f/h/g/i/j": {"a", "b", "c", "d", "e",
+			"f", "h", "g", "i", "j"},
 	}
 	for p, a := range tests {
 		m := &Message{Type: Confirmable, Code: GET, MessageID: 12345}
@@ -688,10 +688,10 @@ func TestExample1Res(t *testing.T) {
 func TestIssue15(t *testing.T) {
 
 	input := []byte{0x53, 0x2, 0x7a,
-					0x23, 0x1, 0x2, 0x3, 0xb1, 0x45, 0xd, 0xd, 0x73, 0x70, 0x61,
-					0x72, 0x6b, 0x2f, 0x63, 0x63, 0x33, 0x30, 0x30, 0x30, 0x2d,
-					0x70, 0x61, 0x74, 0x63, 0x68, 0x2d, 0x76, 0x65, 0x72, 0x73,
-					0x69, 0x6f, 0x6e, 0xff, 0x31, 0x2e, 0x32, 0x38}
+		0x23, 0x1, 0x2, 0x3, 0xb1, 0x45, 0xd, 0xd, 0x73, 0x70, 0x61,
+		0x72, 0x6b, 0x2f, 0x63, 0x63, 0x33, 0x30, 0x30, 0x30, 0x2d,
+		0x70, 0x61, 0x74, 0x63, 0x68, 0x2d, 0x76, 0x65, 0x72, 0x73,
+		0x69, 0x6f, 0x6e, 0xff, 0x31, 0x2e, 0x32, 0x38}
 	msg, err := ParseMessage(input)
 	if err != nil {
 		t.Fatalf("Error parsing message: %v", err)
@@ -713,8 +713,8 @@ func TestIssue15(t *testing.T) {
 
 func TestErrorOptionMarker(t *testing.T) {
 	input := []byte{0x53, 0x2, 0x7a, 0x23,
-					0x1, 0x2, 0x3, 0xbf, 0x01, 0x02, 0x03, 0x04, 0x05, 0x6, 0x7, 0x8, 0x9,
-					0xa, 0xb, 0xc, 0xe, 0xf, 0x10}
+		0x1, 0x2, 0x3, 0xbf, 0x01, 0x02, 0x03, 0x04, 0x05, 0x6, 0x7, 0x8, 0x9,
+		0xa, 0xb, 0xc, 0xe, 0xf, 0x10}
 	msg, err := ParseMessage(input)
 	if err == nil {
 		t.Errorf("Unexpected success parsing malformed option: %v", msg)

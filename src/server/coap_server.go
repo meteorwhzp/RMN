@@ -4,12 +4,12 @@ import (
 	"log"
 	"net"
 
+	"flag"
 	"github.com/dustin/go-coap"
 	logger "github.com/shengkehua/xlog4go"
-	"flag"
+	"math/rand"
 	"runtime"
 	"time"
-	"math/rand"
 )
 
 var (
@@ -50,7 +50,6 @@ func handleB(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 			Payload:   []byte("good bye!"),
 		}
 		res.SetOption(coap.ContentFormat, coap.TextPlain)
-
 
 		logger.Info("Transmitting from B %#v", res)
 		return res

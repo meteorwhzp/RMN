@@ -8,7 +8,7 @@ type ServeMux struct {
 }
 
 type muxEntry struct {
-	h Handler
+	h       Handler
 	pattern string
 }
 

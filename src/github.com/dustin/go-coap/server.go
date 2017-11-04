@@ -1,8 +1,8 @@
 package coap
 
 import (
-	"net"
 	"log"
+	"net"
 	"time"
 )
 
@@ -46,7 +46,7 @@ func Transmit(l *net.UDPConn, a *net.UDPAddr, m Message) error {
 	}
 	if a == nil {
 		_, err = l.Write(d)
-	}else {
+	} else {
 		_, err = l.WriteTo(d, a)
 	}
 	return err
@@ -69,12 +69,12 @@ func ListenAndServe(n, addr string, rh Handler) error {
 	if err != nil {
 		return err
 	}
-	l ,err := net.ListenUDP(n, uaddr)
+	l, err := net.ListenUDP(n, uaddr)
 	if err != nil {
 		return err
 	}
 
-	return Serve(l ,rh)
+	return Serve(l, rh)
 }
 
 //Serve processes incoming UDP packets on the given listener, and processer

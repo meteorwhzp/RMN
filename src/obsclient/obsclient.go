@@ -1,9 +1,9 @@
 package main
 
 import (
-	"log"
-	logger "github.com/shengkehua/xlog4go"
 	"github.com/dustin/go-coap"
+	logger "github.com/shengkehua/xlog4go"
+	"log"
 )
 
 func main() {

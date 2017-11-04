@@ -191,22 +191,22 @@ type optionDef struct {
 }
 
 var optionDefs = [256]optionDef{
-	IfMatch:       optionDef{valueFormat: valueOpaque, minLen: 0, maxLen: 8},
-	URIHost:       optionDef{valueFormat: valueString, minLen: 1, maxLen: 255},
-	ETag:          optionDef{valueFormat: valueOpaque, minLen: 1, maxLen: 8},
-	IfNoneMatch:   optionDef{valueFormat: valueEmpty, minLen: 0, maxLen: 0},
-	Observe:       optionDef{valueFormat: valueUint, minLen: 0, maxLen: 3},
-	URIPort:       optionDef{valueFormat: valueUint, minLen: 0, maxLen: 2},
-	LocationPath:  optionDef{valueFormat: valueString, minLen: 0, maxLen: 255},
-	URIPath:       optionDef{valueFormat: valueString, minLen: 0, maxLen: 255},
-	ContentFormat: optionDef{valueFormat: valueUint, minLen: 0, maxLen: 2},
-	MaxAge:        optionDef{valueFormat: valueUint, minLen: 0, maxLen: 4},
-	URIQuery:      optionDef{valueFormat: valueString, minLen: 0, maxLen: 255},
-	Accept:        optionDef{valueFormat: valueUint, minLen: 0, maxLen: 2},
-	LocationQuery: optionDef{valueFormat: valueString, minLen: 0, maxLen: 255},
-	ProxyURI:      optionDef{valueFormat: valueString, minLen: 1, maxLen: 1034},
-	ProxyScheme:   optionDef{valueFormat: valueString, minLen: 1, maxLen: 255},
-	Size1:         optionDef{valueFormat: valueUint, minLen: 0, maxLen: 4},
+	IfMatch:       {valueFormat: valueOpaque, minLen: 0, maxLen: 8},
+	URIHost:       {valueFormat: valueString, minLen: 1, maxLen: 255},
+	ETag:          {valueFormat: valueOpaque, minLen: 1, maxLen: 8},
+	IfNoneMatch:   {valueFormat: valueEmpty, minLen: 0, maxLen: 0},
+	Observe:       {valueFormat: valueUint, minLen: 0, maxLen: 3},
+	URIPort:       {valueFormat: valueUint, minLen: 0, maxLen: 2},
+	LocationPath:  {valueFormat: valueString, minLen: 0, maxLen: 255},
+	URIPath:       {valueFormat: valueString, minLen: 0, maxLen: 255},
+	ContentFormat: {valueFormat: valueUint, minLen: 0, maxLen: 2},
+	MaxAge:        {valueFormat: valueUint, minLen: 0, maxLen: 4},
+	URIQuery:      {valueFormat: valueString, minLen: 0, maxLen: 255},
+	Accept:        {valueFormat: valueUint, minLen: 0, maxLen: 2},
+	LocationQuery: {valueFormat: valueString, minLen: 0, maxLen: 255},
+	ProxyURI:      {valueFormat: valueString, minLen: 1, maxLen: 1034},
+	ProxyScheme:   {valueFormat: valueString, minLen: 1, maxLen: 255},
+	Size1:         {valueFormat: valueUint, minLen: 0, maxLen: 4},
 }
 
 // MediaType specifies the content type of a message.
