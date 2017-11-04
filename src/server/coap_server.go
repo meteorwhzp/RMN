@@ -5,7 +5,6 @@ import (
 	"net"
 
 	"github.com/dustin/go-coap"
-	"fmt"
 	logger "github.com/shengkehua/xlog4go"
 )
 
