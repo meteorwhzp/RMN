@@ -9,8 +9,6 @@ import (
 	logger "github.com/shengkehua/xlog4go"
 )
 
-var startTime int64
-
 func handleA(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 	//logger.Info("start handlerA")
 	logger.Info("Got message in handleA: path=%q: %#v from %v", m.Path(), m, a)
