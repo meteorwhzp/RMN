@@ -7,6 +7,8 @@ import (
 	"math/rand"
 	"runtime"
 	"time"
+	"fmt"
+	"os"
 )
 
 var (
@@ -27,6 +29,23 @@ func main() {
 
 	logger.Info("start server")
 
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for _, address := range addrs {
+
+		// 检查ip地址判断是否回环地址
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				fmt.Println(ipnet.IP.String())
+			}
+
+		}
+	}
+	return
 	listener, err:= net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("127.0.0.1"), Port: 5555})
 	if err != nil {
 		logger.Error(err.Error())
