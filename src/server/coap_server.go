@@ -16,6 +16,8 @@ var (
 	logconf = flag.String("l", "./conf/log.json", "log config file path")
 )
 
+
+
 func handleA(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 	//logger.Info("start handlerA")
 	logger.Info("Got message in handleA: path=%q: %#v from %v", m.Path(), m, a)

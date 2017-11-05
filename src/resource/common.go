@@ -19,6 +19,7 @@ const (
 	OC_INVALID_CALLBACK ResultCode = 402
 	OC_INVALID_METHOD    ResultCode = 406
 	OC_NO_RESOURCE  ResultCode = 404
+	OC_RESOURCE_EXIT ResultCode = 407
 )
 
 type PropertyAttribute struct {

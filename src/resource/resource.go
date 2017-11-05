@@ -5,3 +5,7 @@ type Resource struct {
 	m_resourceId ResourceIndetifier
 	m_properties map[string]PropertyAttribute
 }
+
+type ResourceList struct {
+	resourceList map[string]*Resource
+}
