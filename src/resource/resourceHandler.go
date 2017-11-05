@@ -26,3 +26,7 @@ func (rl *ResourceList) RetrieveResource(uri string) (res *Resource, status Resu
 	}
 	return res, OC_OK
 }
+
+func ResourceDiscovery() {
+
+}

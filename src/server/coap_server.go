@@ -16,7 +16,9 @@ var (
 	logconf = flag.String("l", "./conf/log.json", "log config file path")
 )
 
+func handleReq() {
 
+}
 
 func handleA(l *net.UDPConn, a *net.UDPAddr, m *coap.Message) *coap.Message {
 	//logger.Info("start handlerA")

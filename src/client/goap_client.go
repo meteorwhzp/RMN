@@ -3,13 +3,29 @@ package main
 import (
 	"log"
 	"os"
-
 	"github.com/dustin/go-coap"
-	//"time"
+	"flag"
+	"runtime"
+	"time"
 	"strconv"
+	"math/rand"
+	logger "github.com/shengkehua/xlog4go"
+)
+
+var (
+	logconf = flag.String("l", "./conf/log.json", "log config file path")
 )
 
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
+	rand.Seed(time.Now().UnixNano())
+	flag.Parse()
+
+	// log
+	if err := logger.SetupLogWithConf(*logconf); err != nil {
+		panic(err)
+	}
+	defer logger.Close()
 
 	req := coap.Message{
 		Type:      coap.Confirmable,
