@@ -24,7 +24,18 @@ func main() {
 	}
 	defer logger.Close()
 
-	ip := net.ParseIP("224.0.0.250")
+	sip := net.ParseIP("127.0.0.1")
+	srcAddr := &net.UDPAddr{IP: net.IPv4zero, Port: 0}
+	dstAddr := &net.UDPAddr{IP: sip, Port: 5555}
+	conn, err := net.DialUDP("udp", srcAddr, dstAddr)
+	if err != nil {
+		logger.Error(err.Error())
+	}
+	defer conn.Close()
+	conn.Write([]byte("hello"))
+	logger.Info("<%s>", conn.RemoteAddr())
+
+	/*ip := net.ParseIP("224.0.0.250")
 	srcAddr := &net.UDPAddr{IP: net.IPv4zero, Port: 0}
 	dstAddr := &net.UDPAddr{IP: ip, Port: 9981}
 	conn, err := net.DialUDP("udp", srcAddr, dstAddr)
@@ -35,6 +46,6 @@ func main() {
 	defer conn.Close()
 
 	conn.Write([]byte("hello"))
-	logger.Info("<%s>", conn.RemoteAddr())
+	logger.Info("<%s>", conn.RemoteAddr())*/
 
 }
