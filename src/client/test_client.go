@@ -1,13 +1,9 @@
 package main
 
 import (
-	"log"
-	"os"
-	"github.com/dustin/go-coap"
 	"flag"
 	"runtime"
 	"time"
-	"strconv"
 	"math/rand"
 	logger "github.com/shengkehua/xlog4go"
 	"net"
