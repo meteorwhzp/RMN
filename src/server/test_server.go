@@ -9,6 +9,7 @@ import (
 	"time"
 	"os"
 	"utils"
+	"resource"
 )
 
 var (
@@ -29,24 +30,11 @@ func main() {
 
 	logger.Info("start server")
 
+	resource.TestJson()
+	return
+
 	logger.Info("the local ip is %s", utils.GetLocalIP())
-	//获取本机IP地址
-	addrs, err := net.InterfaceAddrs()
-	if err != nil {
-		logger.Error(err.Error())
-		os.Exit(1)
-	}
 
-	for _, address := range addrs {
-
-		// 检查ip地址判断是否回环地址
-		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-			if ipnet.IP.To4() != nil {
-				logger.Info(ipnet.IP.String())
-			}
-
-		}
-	}
 	return
 	listener, err:= net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("127.0.0.1"), Port: 5555})
 	if err != nil {

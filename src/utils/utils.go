@@ -16,7 +16,7 @@ func GetLocalIP() (ip string) {
 		// 检查ip地址判断是否回环地址
 		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
 			if ipnet.IP.To4() != nil {
-				logger.Info(ipnet.IP.String())
+				//logger.Info(ipnet.IP.String())
 				ip = ipnet.IP.String()
 				break
 			}
