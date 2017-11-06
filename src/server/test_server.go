@@ -30,11 +30,10 @@ func main() {
 	logger.Info("start server")
 
 	resource.TestJson()
-	return
 
 	logger.Info("the local ip is %s", utils.GetLocalIP())
 
-	return
+	/*return
 	listener, err:= net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("127.0.0.1"), Port: 5555})
 	if err != nil {
 		logger.Error(err.Error())
@@ -53,9 +52,9 @@ func main() {
 		if err != nil {
 			logger.Error(err.Error())
 		}
-	}
+	}*/
 
-	/*addr, err := net.ResolveUDPAddr("udp", "224.0.0.250:9981")
+	addr, err := net.ResolveUDPAddr("udp", "224.0.0.250:9981")
 	if err != nil {
 		logger.Error(err.Error())
 		return
@@ -75,5 +74,9 @@ func main() {
 			logger.Error("Error during read: %s", err)
 		}
 		logger.Info("<%s> %s", remoteAddr, data[:n])
-	}*/
+		_, err = listener.WriteToUDP([]byte("world"), remoteAddr)
+		if err != nil {
+			logger.Error(err.Error())
+		}
+	}
 }
