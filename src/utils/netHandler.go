@@ -6,7 +6,8 @@ import (
 )
 
 func BroadCastServer() {
-	listener, err := net.ListenUDP("udp", &net.UDPAddr{IP: net.IPv4zero, Port: 9981})
+	ip := net.ParseIP("10.141.127.255")
+	listener, err := net.ListenUDP("udp", &net.UDPAddr{IP: ip, Port: 9981})
 	if err != nil {
 		logger.Error(err.Error())
 		return
