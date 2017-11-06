@@ -30,7 +30,7 @@ func main() {
 
 	logger.Info("start server")
 
-	resource.TestJson()
+	//resource.TestJson()
 	return
 
 	logger.Info("the local ip is %s", utils.GetLocalIP())
