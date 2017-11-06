@@ -2,7 +2,7 @@ package resource
 
 type ResourceIndetifier uint8
 
-type ResultCode uint8
+type ResultCode uint16
 
 const (
 	//Success status code
