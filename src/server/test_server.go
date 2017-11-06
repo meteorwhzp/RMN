@@ -7,8 +7,8 @@ import (
 	"math/rand"
 	"runtime"
 	"time"
-	"fmt"
 	"os"
+	"utils"
 )
 
 var (
@@ -29,23 +29,23 @@ func main() {
 
 	logger.Info("start server")
 
+	logger.Info("the local ip is %s", utils.GetLocalIP())
+	//获取本机IP地址
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
-		fmt.Println(err)
+		logger.Error(err.Error())
 		os.Exit(1)
 	}
 
 	for _, address := range addrs {
-		ipnet := address.(*net.IPNet)
-		logger.Info(ipnet.IP.String())
 
 		// 检查ip地址判断是否回环地址
-		/*if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
 			if ipnet.IP.To4() != nil {
-				fmt.Println(ipnet.IP.String())
+				logger.Info(ipnet.IP.String())
 			}
 
-		}*/
+		}
 	}
 	return
 	listener, err:= net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("127.0.0.1"), Port: 5555})
