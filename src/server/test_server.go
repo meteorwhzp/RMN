@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net"
 	"flag"
 	logger "github.com/shengkehua/xlog4go"
 	"math/rand"

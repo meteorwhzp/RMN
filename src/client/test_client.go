@@ -6,7 +6,6 @@ import (
 	"time"
 	"math/rand"
 	logger "github.com/shengkehua/xlog4go"
-	"net"
 	"utils"
 )
 
