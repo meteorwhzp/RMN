@@ -7,9 +7,7 @@ import (
 	"math/rand"
 	"runtime"
 	"time"
-	"os"
 	"utils"
-	"resource"
 )
 
 var (
