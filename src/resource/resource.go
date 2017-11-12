@@ -9,3 +9,4 @@ type Resource struct {
 type ResourceList struct {
 	resourceList map[string]*Resource
 }
+
